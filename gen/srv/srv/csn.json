@@ -1,0 +1,501 @@
+{
+  "namespace": "mfc.primo",
+  "definitions": {
+    "mfc.primo.Varchar": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 30
+    },
+    "mfc.primo.SDate": {
+      "kind": "type",
+      "type": "cds.DateTime"
+    },
+    "mfc.primo.LText": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 20
+    },
+    "mfc.primo.Bolla": {
+      "kind": "type",
+      "type": "cds.Boolean"
+    },
+    "mfc.primo.Messaggio": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 1000
+    },
+    "mfc.primo.email": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 40
+    },
+    "mfc.primo.Descrizioneflusso": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 50
+    },
+    "mfc.primo.Anagrafica_Ruoli": {
+      "kind": "entity",
+      "elements": {
+        "ID_RUOLO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "RUOLO": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Utenti": {
+      "kind": "entity",
+      "elements": {
+        "ID_UTENTE": {
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "COGNOME_UTENTE": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "NOME_UTENTE": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "EMAIL_UTENTE": {
+          "type": "mfc.primo.email",
+          "length": 40,
+          "notNull": true
+        },
+        "ID_RUOLO": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Ruoli",
+          "keys": [
+            {
+              "ref": [
+                "ID_RUOLO"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "TELEFONO_UTENTE": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Moduli": {
+      "kind": "entity",
+      "elements": {
+        "ID_MODULO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "MODULO": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Flussi": {
+      "kind": "entity",
+      "elements": {
+        "ID_FLUSSO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "NOME_FLUSSO": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "DESCRIZIONE_FLUSSO": {
+          "type": "mfc.primo.Descrizioneflusso",
+          "length": 50
+        },
+        "ID_MODULO": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Moduli",
+          "keys": [
+            {
+              "ref": [
+                "ID_MODULO"
+              ]
+            }
+          ],
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Stato_Errori": {
+      "kind": "entity",
+      "elements": {
+        "ID_STATO_ERRORE": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "Stato_Errore": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Errori": {
+      "kind": "entity",
+      "elements": {
+        "ID_ERRORE": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "ID_FLUSSO": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Flussi",
+          "keys": [
+            {
+              "ref": [
+                "ID_FLUSSO"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "MESSAGGIO_ERRORE": {
+          "type": "mfc.primo.Messaggio",
+          "length": 1000,
+          "notNull": true
+        },
+        "DATA_ERRORE": {
+          "type": "mfc.primo.SDate",
+          "notNull": true
+        },
+        "ID_STATO_ERRORE": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Stato_Errori",
+          "keys": [
+            {
+              "ref": [
+                "ID_STATO_ERRORE"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "ID_UTENTE": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Utenti",
+          "keys": []
+        },
+        "Id_UTENTE_TECHNICAL": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Utenti",
+          "keys": []
+        },
+        "STATO_BOTTONE": {
+          "type": "mfc.primo.Bolla",
+          "notNull": true
+        }
+      }
+    },
+    "mfc.primo.Anagrafica_Utente_Flusso": {
+      "kind": "entity",
+      "elements": {
+        "ID_UTENTE_FLUSSO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "ID_UTENTE": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Utenti",
+          "keys": [],
+          "notNull": true
+        },
+        "ID_FLUSSO": {
+          "type": "cds.Association",
+          "target": "mfc.primo.Anagrafica_Flussi",
+          "keys": [
+            {
+              "ref": [
+                "ID_FLUSSO"
+              ]
+            }
+          ],
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService": {
+      "@source": "srv/mfc_srv.cds",
+      "kind": "service",
+      "@path": "/CatalogService"
+    },
+    "CatalogService.Anagrafica_Utenti": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Utenti"
+          ]
+        }
+      },
+      "elements": {
+        "ID_UTENTE": {
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "COGNOME_UTENTE": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "NOME_UTENTE": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "EMAIL_UTENTE": {
+          "type": "mfc.primo.email",
+          "length": 40,
+          "notNull": true
+        },
+        "ID_RUOLO": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Ruoli",
+          "keys": [
+            {
+              "ref": [
+                "ID_RUOLO"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "TELEFONO_UTENTE": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Ruoli": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Ruoli"
+          ]
+        }
+      },
+      "elements": {
+        "ID_RUOLO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "RUOLO": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Flussi": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Flussi"
+          ]
+        }
+      },
+      "elements": {
+        "ID_FLUSSO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "NOME_FLUSSO": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        },
+        "DESCRIZIONE_FLUSSO": {
+          "type": "mfc.primo.Descrizioneflusso",
+          "length": 50
+        },
+        "ID_MODULO": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Moduli",
+          "keys": [
+            {
+              "ref": [
+                "ID_MODULO"
+              ]
+            }
+          ],
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Moduli": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Moduli"
+          ]
+        }
+      },
+      "elements": {
+        "ID_MODULO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "MODULO": {
+          "type": "mfc.primo.LText",
+          "length": 20,
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Errori": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Errori"
+          ]
+        }
+      },
+      "elements": {
+        "ID_ERRORE": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "ID_FLUSSO": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Flussi",
+          "keys": [
+            {
+              "ref": [
+                "ID_FLUSSO"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "MESSAGGIO_ERRORE": {
+          "type": "mfc.primo.Messaggio",
+          "length": 1000,
+          "notNull": true
+        },
+        "DATA_ERRORE": {
+          "type": "mfc.primo.SDate",
+          "notNull": true
+        },
+        "ID_STATO_ERRORE": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Stato_Errori",
+          "keys": [
+            {
+              "ref": [
+                "ID_STATO_ERRORE"
+              ]
+            }
+          ],
+          "notNull": true
+        },
+        "ID_UTENTE": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Utenti",
+          "keys": []
+        },
+        "Id_UTENTE_TECHNICAL": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Utenti",
+          "keys": []
+        },
+        "STATO_BOTTONE": {
+          "type": "mfc.primo.Bolla",
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Stato_Errori": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Stato_Errori"
+          ]
+        }
+      },
+      "elements": {
+        "ID_STATO_ERRORE": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "Stato_Errore": {
+          "type": "mfc.primo.Varchar",
+          "length": 30,
+          "notNull": true
+        }
+      }
+    },
+    "CatalogService.Anagrafica_Utente_Flusso": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "mfc.primo.Anagrafica_Utente_Flusso"
+          ]
+        }
+      },
+      "elements": {
+        "ID_UTENTE_FLUSSO": {
+          "key": true,
+          "type": "cds.Integer",
+          "notNull": true
+        },
+        "ID_UTENTE": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Utenti",
+          "keys": [],
+          "notNull": true
+        },
+        "ID_FLUSSO": {
+          "type": "cds.Association",
+          "target": "CatalogService.Anagrafica_Flussi",
+          "keys": [
+            {
+              "ref": [
+                "ID_FLUSSO"
+              ]
+            }
+          ],
+          "notNull": true
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v3.5.4",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}
